@@ -77,6 +77,8 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
     private final int UNLOCK_ACHIEVEMENT = 5;
     private final int INC_ACHIEVEMENT = 6;
     private final int SUBMIT_SCORE = 8;
+    private final int SHOW_UI = 9;
+    private final int HIDE_UI = 10;
     
     private String toast_message = "";
     private String achieve_unlock_id = "";
@@ -121,7 +123,12 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
                 case SUBMIT_SCORE:
                 	mHelper.getGamesClient().submitScore(getString(R.string.leaderboardPub), to_submit);
                 	break;
-       
+                case SHOW_UI:
+                	ui_layout_view.setVisibility(View.VISIBLE);
+                	break;
+                case HIDE_UI:
+                	ui_layout_view.setVisibility(View.GONE);
+                	break;
             }
         }
     };
@@ -380,24 +387,15 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		GameMain.size_g = grid_ind;
 		
 		this.unlockAchievement(0);
-		
-		this.ui_layout_view.setVisibility(View.GONE);
+	
 		this.maingame.startGame(speed_F);
 	}
 
 	@Override
-	public void showUiLayout(final boolean show) {
+	public void showUiLayout(boolean show) {
 		// TODO Auto-generated method stub
-	this.runOnUiThread(new Runnable(){
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			if(!show)
-        		ui_layout_view.setVisibility(View.GONE);
-        	else ui_layout_view.setVisibility(View.VISIBLE);
-			
-		}});
+		if(show)handler.sendEmptyMessage(SHOW_UI);
+		else handler.sendEmptyMessage(HIDE_UI);
 	}
 	
 }

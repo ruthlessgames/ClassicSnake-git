@@ -77,6 +77,7 @@ public class GameMain extends Game {
 		game = null;
 		game = new GameDisplay(this,snake_speed);
 		this.setScreen(game);
+		this.android_bridge.showUiLayout(false);
 	}
 	
 }
