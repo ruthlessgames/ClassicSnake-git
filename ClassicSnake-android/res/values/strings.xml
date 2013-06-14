@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
      <string name="app_name">Classic Snake</string>
+     <string name="click">testemetodo</string>
+      <string-array name="size_entries">
+                <item>Huge</item>
+                <item>Medium</item>
+                <item>Micro</item>
+                </string-array>
+                 <string-array name="speed_entries">
+                <item>1</item>
+                <item>2</item>
+                <item>3</item>
+                <item>4</item>
+                <item>5</item>
+                </string-array>
 </resources>

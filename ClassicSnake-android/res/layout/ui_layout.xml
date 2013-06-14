@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.badlogic.gdx.backends.android.AndroidApplication" >
+
+    <TextView
+        android:id="@+id/lblSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/spinnerSize"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/spinnerSize"
+        android:text="Size:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/lblSpedd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/lblSize"
+        android:layout_alignTop="@+id/spinnerSpeed"
+        android:text="Speed:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TableRow
+        android:id="@+id/sign_out_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:background="#f0f0f0"
+        android:gravity="center|right"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="179dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false" >
+        </com.google.android.gms.common.SignInButton>
+
+    </TableRow>
+
+    <Spinner
+        android:id="@+id/spinnerSize"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/playBtn"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="64dp"
+        android:entries="@array/size_entries" />
+
+    <Spinner
+        android:id="@+id/spinnerSpeed"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/spinnerSize"
+        android:layout_marginTop="23dp"
+        android:layout_toRightOf="@+id/lblSize"
+        android:entries="@array/speed_entries" />
+
+    <Button
+        android:id="@+id/playBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinnerSpeed"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="Play" />
+
+</RelativeLayout>

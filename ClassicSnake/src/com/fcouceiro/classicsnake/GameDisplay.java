@@ -179,7 +179,7 @@ public class GameDisplay extends UI{
 
 			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
 				if(x < btnOkScore.getWidth() && x >0 && y<btnOkScore.getHeight() && y > 0)
-					maingame.setScreen(maingame.main_menu);
+					maingame.android_bridge.showUiLayout(true);
 			}
 		});
 		

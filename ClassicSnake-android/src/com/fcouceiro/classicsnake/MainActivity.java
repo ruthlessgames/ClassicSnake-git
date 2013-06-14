@@ -17,20 +17,29 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.backends.android.AndroidApplication;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.fcouceiro.classicsnake.GameMain;
 import com.fcouceiro.classicsnake.RequestHandlerBridge;
 import com.google.ads.AdRequest;
@@ -48,13 +57,17 @@ import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallback
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
 
 
 
-public class MainActivity extends AndroidApplication implements RequestHandlerBridge,GameHelper.GameHelperListener{
+public class MainActivity extends AndroidApplication implements RequestHandlerBridge,GameHelper.GameHelperListener, OnClickListener{
 
 	AdView adView;
 	GameHelper mHelper;
+	View ui_layout_view;
+	View gameView;
+	GameMain maingame;
 	
     private final int SHOW_ADS = 1;
     private final int HIDE_ADS = 0;
@@ -108,6 +121,7 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
                 case SUBMIT_SCORE:
                 	mHelper.getGamesClient().submitScore(getString(R.string.leaderboardPub), to_submit);
                 	break;
+       
             }
         }
     };
@@ -128,8 +142,8 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         
        
-        
-        View gameView = initializeForView(new GameMain(this), false);
+        maingame = new GameMain(this);
+        gameView = initializeForView(maingame, false);
      
         AdRequest adreq = new AdRequest();
         //adreq.addTestDevice("90E7CA239B2B610FB2242326D511B267");
@@ -140,9 +154,20 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
         adView.loadAd(adreq);
 
      // Add the libgdx view
+     
         layout.addView(gameView);
-
+       
+        LayoutInflater inflater = getLayoutInflater();
+        ui_layout_view = inflater.inflate(R.layout.ui_layout, layout, false);
+        ui_layout_view.setVisibility(View.GONE);
         
+        SignInButton sig_Btn = (SignInButton) ui_layout_view.findViewById(R.id.sign_in_button);
+        sig_Btn.setOnClickListener(this);
+        
+        Button play_btn = (Button)  ui_layout_view.findViewById(R.id.playBtn);
+        play_btn.setOnClickListener(this);
+        
+        layout.addView(ui_layout_view);
         // Add the AdMob view
         RelativeLayout.LayoutParams adParams = 
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
@@ -155,6 +180,7 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
         mHelper = new GameHelper(this);
         mHelper.setup(this);
         
+        layout.setBackgroundColor(Color.BLACK);
         // Hook it all up
         setContentView(layout);
         
@@ -300,6 +326,78 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 			}
 	}
 
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getId() == R.id.sign_in_button)
+		{
+			this.starConnections();
+		}
+		else if(arg0.getId() == R.id.playBtn)
+		{
+			play();
+		}
+	}
+	
+	private void play(){
+		GameMain.lines = 0;
+		GameMain.columns = 0;
+		Spinner s_size = (Spinner) this.ui_layout_view.findViewById(R.id.spinnerSize);
+		Spinner s_speed = (Spinner) this.ui_layout_view.findViewById(R.id.spinnerSpeed);
+		String size = s_size.getSelectedItem().toString();
+		String speed = s_speed.getSelectedItem().toString();
+		
+		
+		int grid_ind = 0;
+		
+		if(size.contains("Huge")){
+			GameMain.columns = 15;
+			GameMain.lines = GameMain.ratio * GameMain.columns;
+			grid_ind = 1;
+		}
+		else if(size.contains("Medium")){
+			GameMain.columns = 12;
+			GameMain.lines = GameMain.ratio * GameMain.columns;
+			grid_ind = 2;
+			
+			this.unlockAchievement(1);
+		}
+		else if(size.contains("Micro")){
+			GameMain.columns = 6;
+			GameMain.lines = GameMain.ratio * GameMain.columns;
+			grid_ind = 3;
+			this.unlockAchievement(2);
+		}
+		
+		float selSpeedf = speed.charAt(0) -'0';
+		this.showToast(((int) selSpeedf)+"");
+		float speed_F = 1.2f -  0.2f * selSpeedf;
+		
+		GameMain.incH = (GameMain.h / GameMain.lines);
+		GameMain.incW = (GameMain.w / GameMain.columns);
+		
+		GameMain.speed_s = (int) selSpeedf -1;
+		GameMain.size_g = grid_ind;
+		
+		this.unlockAchievement(0);
+		
+		this.ui_layout_view.setVisibility(View.GONE);
+		this.maingame.startGame(speed_F);
+	}
 
+	@Override
+	public void showUiLayout(final boolean show) {
+		// TODO Auto-generated method stub
+	this.runOnUiThread(new Runnable(){
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			if(!show)
+        		ui_layout_view.setVisibility(View.GONE);
+        	else ui_layout_view.setVisibility(View.VISIBLE);
+			
+		}});
+	}
 	
 }

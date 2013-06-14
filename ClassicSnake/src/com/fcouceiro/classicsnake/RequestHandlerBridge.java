@@ -10,4 +10,5 @@ public interface RequestHandlerBridge {
 	public void unlockAchievement(int index);
 	public void incrementAchievement(int index, int inc);
 	public void submitScore(int score);
+	public void showUiLayout(boolean show);
 }

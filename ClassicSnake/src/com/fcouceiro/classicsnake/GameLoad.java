@@ -33,7 +33,6 @@ public class GameLoad extends UI implements LoadingScreen{
 	public void createGame() {
 		// TODO Auto-generated method stub
 		
-		maingame.main_menu = new GameMainMenu(maingame);
 	}
 
 	@Override
@@ -41,7 +40,8 @@ public class GameLoad extends UI implements LoadingScreen{
 		// TODO Auto-generated method stub
 		if(asm.update())
 		{
-			maingame.setScreen(maingame.main_menu);
+			GameMain.loaded = true;
+			maingame.android_bridge.showUiLayout(true);
 		}
 		
 		float progress = asm.getProgress();
@@ -63,7 +63,7 @@ public class GameLoad extends UI implements LoadingScreen{
 		Texture bg = new Texture(Gdx.files.internal("default/rlogo.png"));
 		bg.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		table.setBackground(new TextureRegionDrawable(new Sprite(bg)));
+		//table.setBackground(new TextureRegionDrawable(new Sprite(bg)));
 		
 		this.load_lbl = new Label("Initializing",StylesManager.skin);
 		load_lbl.setPosition(maingame.w / 2 -50, maingame.h /6);

@@ -15,10 +15,8 @@ public class GameMain extends Game {
 	public static BitmapFont main_font;
 	private GameDisplay game;
 	public static Vector2 dir_right,dir_left,dir_up,dir_down,for_next_vert;
-	
+	public static boolean loaded = false;
 	public static AssetManager asm;
-	
-	public GameMainMenu main_menu;
 	
 	public static float incH,incW,ui_incH,ui_incW,lines,columns;
 	public static float w,h;
