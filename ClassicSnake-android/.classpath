@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ClassicSnake"/>
+	<classpathentry exported="true" kind="lib" path="/Users/franciscocouceiro/Downloads/GoogleAdMobAdsSdkAndroid-6.4.1/GoogleAdMobAdsSdk-6.4.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/franciscocouceiro/Downloads/google-api-java-client-1.15.0-rc/libs/google-api-client-android-1.15.0-rc.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/franciscocouceiro/Downloads/google-api-java-client-1.15.0-rc/libs/google-http-client-1.15.0-rc.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/franciscocouceiro/Downloads/google-api-java-client-1.15.0-rc/libs/google-oauth-client-1.15.0-rc.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/franciscocouceiro/Downloads/google-api-java-client-1.15.0-rc/libs/google-http-client-android-1.15.0-rc.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="lib" path="libs/gdx-backend-android.jar" sourcepath="libs/gdx-backend-android-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="/ClassicSnake/libs/gdx.jar" sourcepath="/ClassicSnake/libs/gdx-sources.jar"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
