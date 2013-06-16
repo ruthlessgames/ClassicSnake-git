@@ -2,11 +2,11 @@
 
 You must include google-play-services_lib "as library" in Eclipse!
 
-Known bugs:
-->Sign out button
-->Border colisions (size != huge)
+##Known bugs:
+*Sign out button
+*Border colisions (size != huge)
 
-To-do:
-->assets
-->free mode
-->blitz version
+##To-do:
+*assets
+*free mode
+*blitz version
