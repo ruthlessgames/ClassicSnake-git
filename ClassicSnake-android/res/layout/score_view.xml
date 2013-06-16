@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScoreView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:isIndicator="true" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:text="Super!"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/lblScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingBar"
+        android:layout_centerHorizontal="true"
+        android:text="Score: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/btnOkScore"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblScore"
+        android:layout_centerHorizontal="true"
+        android:text="OK" />
+
+    <TextView
+        android:id="@+id/lblBestScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnSubmit"
+        android:layout_alignBottom="@+id/btnSubmit"
+        android:layout_alignLeft="@+id/ratingBar"
+        android:text="New best score!"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#FFA000" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView"
+        android:layout_toRightOf="@+id/btnOkScore"
+        android:text="Submit" />
+
+</RelativeLayout>

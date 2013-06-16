@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fcouceiro.classicsnake"
-    android:versionCode="3"
+    android:versionCode="6"
     android:versionName="1" >
 
     
      
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
+    <uses-sdk android:minSdkVersion="5" android:targetSdkVersion="17" />
 	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
 	<uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>

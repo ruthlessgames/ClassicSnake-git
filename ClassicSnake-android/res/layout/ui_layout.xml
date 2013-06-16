@@ -26,55 +26,70 @@
         android:text="Speed:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TableRow
-        android:id="@+id/sign_out_bar"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentRight="false"
-        android:background="#f0f0f0"
-        android:gravity="center|right"
-        android:orientation="horizontal"
-        android:padding="10dp" >
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="179dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentStart="false" >
-        </com.google.android.gms.common.SignInButton>
-
-    </TableRow>
+    <Spinner
+        android:id="@+id/spinnerSpeed"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/playBtn"
+        android:layout_alignParentEnd="false"
+        android:layout_alignRight="@+id/spinnerSize"
+        android:layout_marginBottom="55dp"
+        android:layout_toRightOf="@+id/lblSize"
+        android:entries="@array/speed_entries" />
 
     <Spinner
         android:id="@+id/spinnerSize"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/spinnerSpeed"
         android:layout_alignLeft="@+id/playBtn"
         android:layout_alignParentEnd="false"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="64dp"
+        android:layout_alignRight="@+id/playBtn"
+        android:layout_marginBottom="23dp"
         android:entries="@array/size_entries" />
-
-    <Spinner
-        android:id="@+id/spinnerSpeed"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="false"
-        android:layout_below="@+id/spinnerSize"
-        android:layout_marginTop="23dp"
-        android:layout_toRightOf="@+id/lblSize"
-        android:entries="@array/speed_entries" />
 
     <Button
         android:id="@+id/playBtn"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/spinnerSpeed"
+        android:layout_above="@+id/sign_out_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginBottom="32dp"
         android:text="Play" />
+
+    <TableRow
+        android:id="@+id/sign_out_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="#f0f0f0"
+        android:orientation="horizontal"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="left|center_vertical"
+            android:text="Sign in and publish your latest scores to the public leaderboard! \nAlso you&apos;ll be presented with outstanding achievements along your journey, here, with Classic Snake X1!" />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false"
+            android:layout_gravity="right|center_vertical" >
+        </com.google.android.gms.common.SignInButton>
+
+        <Button
+            android:id="@+id/sign_out_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:text="Sign out" />
+    </TableRow>
 
 </RelativeLayout>

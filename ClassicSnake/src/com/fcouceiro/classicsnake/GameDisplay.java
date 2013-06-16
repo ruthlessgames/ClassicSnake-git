@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -22,13 +23,11 @@ public class GameDisplay extends UI{
 	GestureDetector input_processor;
 	Snake snake;
 	Score score_actual;
-	boolean paused = false;
-	
+	public boolean paused = false;
+	boolean ended = false;
+	boolean new_best_score = false;
 	//ui stuff
-	SequenceAction end_game_action;
-	Window score_wdm;
-	Label lbl_wdm_score;
-	TextButton sub_score;
+	float alpha = 1.0f;
 	boolean start_counting = false;
 	int counting = 0;
 	
@@ -64,58 +63,33 @@ public class GameDisplay extends UI{
 		if(Gdx.app.getType() == ApplicationType.Android)
 		maingame.android_bridge.showAds(false);
 	}
-	
-	@Override
-	public void hide(){
-		Gdx.input.setInputProcessor(null);
-		if(Gdx.app.getType() == ApplicationType.Android)
+
+	public void pause_ingame(){
+		this.paused = true;
 		maingame.android_bridge.showAds(true);
 		
-		if(this.score_actual.final_score > GameMain.best_session_score)
-		{
-			GameMain.best_session_score = (int) this.score_actual.final_score;
-		}
 		
-		GameMain.last_score = (int) this.score_actual.final_score;
-	}
-
-	public void pause(){
-		this.paused = true;
+		
 	}
 	
-	public void resume(){
+	public void resume_ingame(){
 		this.paused = false;
+		maingame.android_bridge.showAds(false);
 	}
 	
 	@Override
 	public void render(float delta)
 	{
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(alpha, alpha, alpha, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		if(!this.paused){
 			switch(snake.update())
 			{
 			case -1:
-				this.pause();
 				this.showScorePlacard();
+				this.pause_ingame();
 				break;
-			}
-		}
-		else{
-			if(this.start_counting)
-			{
-				lbl_wdm_score.setText("Score: " + this.counting);
-				
-				if(this.counting != score_actual.final_score){
-					this.counting++;
-					
-					if(counting > 750){
-						sub_score.setText("Submit!");
-						sub_score.setDisabled(false);
-					}
-				}
-			
 			}
 		}
 		
@@ -125,67 +99,28 @@ public class GameDisplay extends UI{
 	
 	public void showScorePlacard()
 	{
-		score_wdm.setVisible(true);
-		score_wdm.getColor().a = 0;
-		score_wdm.addAction(this.end_game_action);
+		this.ended = true;
+		
+			if (this.score_actual.final_score > GameMain.best_session_score) {
+				GameMain.best_session_score = (int) this.score_actual.final_score;
+				this.new_best_score = true;
+			}
+			GameMain.last_score = (int) this.score_actual.final_score;
+		
+		
+		stage.addAction(Actions.run(new Runnable(){
+
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						alpha = 0;
+					}}));
+		
+		maingame.android_bridge.showScorePlacard((int)score_actual.final_score,this.new_best_score);
 	}
 	
 	
 	private void pop_UI() {
-		end_game_action = new SequenceAction();
-		end_game_action.addAction(Actions.delay(3));
-		end_game_action.addAction(Actions.fadeIn(0.5f));
-		end_game_action.addAction(Actions.run(new Runnable() {
-        public void run () {
-        	start_counting = true;	
-        }
-		}));
 
-		score_wdm = new Window("Your score!",StylesManager.skin);
-		score_wdm.setMovable(false);
-		Vector2 wdm_size = new Vector2((GameMain.w / GameMain.ui_incW - 2) * GameMain.ui_incW, (GameMain.h / GameMain.ui_incH - 2) * GameMain.ui_incH);
-		score_wdm.setSize(wdm_size.x,wdm_size.y);
-		score_wdm.setPosition(GameMain.ui_incW, GameMain.ui_incH);
-		score_wdm.setVisible(false);
-		
-		lbl_wdm_score = new Label("Score: 0",StylesManager.skin);
-		lbl_wdm_score.setPosition(wdm_size.x /2 - GameMain.ui_incW, 4*GameMain.ui_incH);
-		
-		sub_score = new TextButton("-------",StylesManager.skin);
-		sub_score.setDisabled(true);
-		sub_score.setPosition(wdm_size.x /2 - GameMain.ui_incW, 3*GameMain.ui_incH);
-		sub_score.setSize(GameMain.ui_incW * 2,GameMain.ui_incH);
-		sub_score.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-
-				return true;
-			}
-
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				if(x < sub_score.getWidth() && x >0 && y<sub_score.getHeight() && y > 0)
-					if(Gdx.app.getType() == ApplicationType.Android)
-					maingame.android_bridge.submitScore((int) score_actual.final_score);
-			}
-		});
-		
-		final TextButton btnOkScore = new TextButton("OK",StylesManager.skin);
-		btnOkScore.setPosition(wdm_size.x /2 - GameMain.ui_incW, GameMain.ui_incH);
-		btnOkScore.setSize(GameMain.ui_incW * 2,GameMain.ui_incH);
-		btnOkScore.addListener(new InputListener() {
-			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-
-				return true;
-			}
-
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				if(x < btnOkScore.getWidth() && x >0 && y<btnOkScore.getHeight() && y > 0)
-					maingame.android_bridge.showUiLayout(true);
-			}
-		});
-		
-		score_wdm.addActor(sub_score);
-		score_wdm.addActor(lbl_wdm_score);
-		score_wdm.addActor(btnOkScore);
-		stage.addActor(score_wdm);
 	}
 }

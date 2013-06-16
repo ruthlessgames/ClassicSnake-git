@@ -11,4 +11,5 @@ public interface RequestHandlerBridge {
 	public void incrementAchievement(int index, int inc);
 	public void submitScore(int score);
 	public void showUiLayout(boolean show);
+	public void showScorePlacard(int score,boolean new_best);
 }

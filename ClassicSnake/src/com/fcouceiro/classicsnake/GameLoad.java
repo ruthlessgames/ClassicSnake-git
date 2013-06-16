@@ -3,9 +3,11 @@ package com.fcouceiro.classicsnake;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader.TextureParameter;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.ruthlessgames.api.LoadingScreen;
@@ -16,7 +18,7 @@ public class GameLoad extends UI implements LoadingScreen{
 
 	AssetManager asm;
 	Label load_lbl;
-
+	boolean start_control = false;
 	
 	GameMain maingame;
 	
@@ -32,16 +34,30 @@ public class GameLoad extends UI implements LoadingScreen{
 	@Override
 	public void createGame() {
 		// TODO Auto-generated method stub
-		
+		maingame.wait_screen = new WaitScreen();
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		if(asm.update())
+		Gdx.gl.glClearColor(0,0,0, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		if(asm.update() && !start_control)
 		{
 			GameMain.loaded = true;
 			maingame.android_bridge.showUiLayout(true);
+			start_control = true;
+			
+			load_lbl.addAction(Actions.sequence(Actions.fadeOut(1),Actions.run(new Runnable(){
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					maingame.setScreen(maingame.wait_screen);
+				}
+				
+			})));
 		}
 		
 		float progress = asm.getProgress();
@@ -66,7 +82,7 @@ public class GameLoad extends UI implements LoadingScreen{
 		//table.setBackground(new TextureRegionDrawable(new Sprite(bg)));
 		
 		this.load_lbl = new Label("Initializing",StylesManager.skin);
-		load_lbl.setPosition(maingame.w / 2 -50, maingame.h /6);
+		load_lbl.setPosition(maingame.w / 2 -50, maingame.h /2);
 		
 		table.addActor(load_lbl);
 	}

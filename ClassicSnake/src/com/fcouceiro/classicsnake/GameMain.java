@@ -14,6 +14,7 @@ public class GameMain extends Game {
 	public static SpriteBatch batch;
 	public static BitmapFont main_font;
 	private GameDisplay game;
+	public WaitScreen wait_screen;
 	public static Vector2 dir_right,dir_left,dir_up,dir_down,for_next_vert;
 	public static boolean loaded = false;
 	public static AssetManager asm;
@@ -71,9 +72,24 @@ public class GameMain extends Game {
 		
 	}
 	
+	public boolean pauseOnGoingGame(){
+		if(game != null && !game.ended){
+			game.pause_ingame();
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void resumeOnGoingGame()
+	{
+		game.resume_ingame();
+	}
+	
 	public void startGame(float snake_speed)
 	{
 		//reset directions
+		if(game != null) game.dispose();
 		game = null;
 		game = new GameDisplay(this,snake_speed);
 		this.setScreen(game);

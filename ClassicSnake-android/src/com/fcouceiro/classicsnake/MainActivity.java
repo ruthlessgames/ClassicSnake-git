@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -66,8 +67,14 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 	AdView adView;
 	GameHelper mHelper;
 	View ui_layout_view;
+	View score_placard_view;
+	View pause_menu_view;
 	View gameView;
 	GameMain maingame;
+	
+	//btns 
+	SignInButton sig_Btn;
+	Button sign_out;
 	
     private final int SHOW_ADS = 1;
     private final int HIDE_ADS = 0;
@@ -125,6 +132,7 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
                 	break;
                 case SHOW_UI:
                 	ui_layout_view.setVisibility(View.VISIBLE);
+                	score_placard_view.setVisibility(View.GONE);
                 	break;
                 case HIDE_UI:
                 	ui_layout_view.setVisibility(View.GONE);
@@ -164,33 +172,66 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
      
         layout.addView(gameView);
        
+        //mainmenu
         LayoutInflater inflater = getLayoutInflater();
         ui_layout_view = inflater.inflate(R.layout.ui_layout, layout, false);
         ui_layout_view.setVisibility(View.GONE);
         
-        SignInButton sig_Btn = (SignInButton) ui_layout_view.findViewById(R.id.sign_in_button);
+        sig_Btn = (SignInButton) ui_layout_view.findViewById(R.id.sign_in_button);
         sig_Btn.setOnClickListener(this);
         
         Button play_btn = (Button)  ui_layout_view.findViewById(R.id.playBtn);
         play_btn.setOnClickListener(this);
         
+        sign_out = (Button)  ui_layout_view.findViewById(R.id.sign_out_btn);
+        sign_out.setVisibility(View.GONE);
+        sign_out.setOnClickListener(this);
+        
         layout.addView(ui_layout_view);
+        
+        //score placard
+        score_placard_view = inflater.inflate(R.layout.score_view, layout,false);
+        score_placard_view.setVisibility(View.GONE);
+        
+        Button btnOk = (Button)score_placard_view.findViewById(R.id.btnOkScore);
+        btnOk.setOnClickListener(this);
+        
+        Button subBtn = (Button)score_placard_view.findViewById(R.id.btnSubmit);
+        subBtn.setVisibility(View.INVISIBLE);
+        subBtn.setOnClickListener(this);
+        layout.addView(score_placard_view);
+        
+        //pause menu
+        pause_menu_view = inflater.inflate(R.layout.pause_menu, layout,false);
+        pause_menu_view.setVisibility(View.GONE);
+        Button btnResume = (Button)pause_menu_view.findViewById(R.id.btnResumeGame);
+        btnResume.setOnClickListener(this);
+        
+        layout.addView(pause_menu_view);
         // Add the AdMob view
         RelativeLayout.LayoutParams adParams = 
                 new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
                                 RelativeLayout.LayoutParams.WRAP_CONTENT);
         adParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        adParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+       	adParams.addRule(RelativeLayout.ALIGN_RIGHT);
 
         layout.addView(adView, adParams);
         
         mHelper = new GameHelper(this);
         mHelper.setup(this);
-        
+        mHelper.setSigningInMessage("Signing in...");
+        mHelper.setSigningOutMessage("Signing out...");
+        mHelper.setUnknownErrorMessage("Unknown error ocurred! Contact the developer as soon as possible. Thanks");
         layout.setBackgroundColor(Color.BLACK);
         // Hook it all up
         setContentView(layout);
         
+    }
+    
+    @Override
+    public void onPause(){
+    	super.onPause();
+    	if(maingame.pauseOnGoingGame()) this.pause_menu_view.setVisibility(View.VISIBLE);
     }
 
 	@Override
@@ -219,6 +260,8 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		this.showToast("Success");
 		is_online_and_signed = true;
 		
+		this.sig_Btn.setVisibility(View.GONE);
+		this.sign_out.setVisibility(View.VISIBLE);
 		this.unlockAchievement(3);
 		
 		
@@ -344,6 +387,23 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		{
 			play();
 		}
+		else if(arg0.getId() == R.id.sign_out_btn)
+		{
+			mHelper.getGamesClient().signOut();
+			this.sig_Btn.setVisibility(View.VISIBLE);
+			this.sign_out.setVisibility(View.GONE);
+		}
+		else if(arg0.getId() == R.id.btnOkScore)
+		{
+			handler.sendEmptyMessage(SHOW_UI);
+		}
+		else if(arg0.getId() == R.id.btnResumeGame){
+			this.pause_menu_view.setVisibility(View.GONE);
+			maingame.resumeOnGoingGame();
+		}
+		else if(arg0.getId() == R.id.btnSubmit){
+			this.submitScore(to_submit);
+		}
 	}
 	
 	private void play(){
@@ -377,7 +437,6 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		}
 		
 		float selSpeedf = speed.charAt(0) -'0';
-		this.showToast(((int) selSpeedf)+"");
 		float speed_F = 1.2f -  0.2f * selSpeedf;
 		
 		GameMain.incH = (GameMain.h / GameMain.lines);
@@ -396,6 +455,43 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		// TODO Auto-generated method stub
 		if(show)handler.sendEmptyMessage(SHOW_UI);
 		else handler.sendEmptyMessage(HIDE_UI);
+	}
+
+	@Override
+	public void showScorePlacard(final int score, final boolean new_best) {
+		// TODO Auto-generated method stub
+			this.runOnUiThread(new Runnable(){
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				to_submit = score;
+				score_placard_view.setVisibility(View.VISIBLE);
+				TextView scoreLbl = (TextView)score_placard_view.findViewById(R.id.lblScore);
+				scoreLbl.setText("Score: " + score);
+				RatingBar rat = (RatingBar)score_placard_view.findViewById(R.id.ratingBar);
+				rat.setMax(5);
+				
+				TextView newLbl = (TextView)score_placard_view.findViewById(R.id.lblBestScore);
+				Button subBtn = (Button)score_placard_view.findViewById(R.id.btnSubmit);
+				if(new_best){
+					newLbl.setVisibility(View.VISIBLE);
+					if(is_online_and_signed) subBtn.setVisibility(View.VISIBLE);
+				}
+				else{
+					newLbl.setVisibility(View.INVISIBLE);
+					subBtn.setVisibility(View.INVISIBLE);
+				}
+				
+				if(score >= 50 && score <= 175) rat.setProgress(1);
+				else if(score <= 300) rat.setProgress(2);
+				else if(score <= 700) rat.setProgress(3);
+				else if(score <= 1200) rat.setProgress(4);
+				else rat.setProgress(5);
+				
+			}
+			
+		});
 	}
 	
 }
