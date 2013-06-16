@@ -9,5 +9,7 @@ You must include google-play-services_lib "as library" in Eclipse!
 
 ##To-do:
 *assets
+
 *free mode
+
 *blitz version
