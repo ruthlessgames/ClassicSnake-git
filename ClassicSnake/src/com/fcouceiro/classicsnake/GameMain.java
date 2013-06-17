@@ -2,6 +2,7 @@ package com.fcouceiro.classicsnake;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -18,6 +19,7 @@ public class GameMain extends Game {
 	public static Vector2 dir_right,dir_left,dir_up,dir_down,for_next_vert;
 	public static boolean loaded = false;
 	public static AssetManager asm;
+	public static Preferences session_prefs;
 	
 	public static float incH,incW,ui_incH,ui_incW,lines,columns;
 	public static float w,h;
@@ -29,6 +31,8 @@ public class GameMain extends Game {
 	public static int last_score = -1;
 	//android bridge
 	RequestHandlerBridge android_bridge;
+	
+	private int fruits_eaten;
 	
 	public GameMain(RequestHandlerBridge bridge)
 	{
@@ -59,10 +63,10 @@ public class GameMain extends Game {
 		
 		ui_incH = (int) (h / (ratio * 16));
 		ui_incW = (int) (w / 16);
-		
+		session_prefs = Gdx.app.getPreferences("session-prefs");
+		fruits_eaten = session_prefs.getInteger("fruits_eaten",0);
 		//setup styles manager
 		StylesManager setup_styles = new StylesManager("default");
-		
 		asm = new AssetManager();
 		GameLoad loading_screen = new GameLoad(this);
 		loading_screen.setAssetManager(asm);
@@ -88,12 +92,28 @@ public class GameMain extends Game {
 	
 	public void startGame(float snake_speed)
 	{
-		//reset directions
-		if(game != null) game.dispose();
+		//reset and start
 		game = null;
 		game = new GameDisplay(this,snake_speed);
 		this.setScreen(game);
 		this.android_bridge.showUiLayout(false);
 	}
+	
+	public void incFruits()
+	{
+		fruits_eaten++;
+		if(fruits_eaten == 15) android_bridge.unlockAchievement(7);
+		else if(fruits_eaten == 40) android_bridge.unlockAchievement(8);
+		else if(fruits_eaten == 100) android_bridge.unlockAchievement(9);
+		
+	}
+	
+	@Override
+	public void pause()
+	{
+		session_prefs.putInteger("fruits_eaten", this.fruits_eaten);
+		session_prefs.flush();
+	}
+	
 	
 }

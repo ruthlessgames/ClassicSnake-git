@@ -86,6 +86,7 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
     private final int SUBMIT_SCORE = 8;
     private final int SHOW_UI = 9;
     private final int HIDE_UI = 10;
+    private final int SIGN_OUT = 11;
     
     private String toast_message = "";
     private String achieve_unlock_id = "";
@@ -130,13 +131,27 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
                 case SUBMIT_SCORE:
                 	mHelper.getGamesClient().submitScore(getString(R.string.leaderboardPub), to_submit);
                 	break;
-                case SHOW_UI:
-                	ui_layout_view.setVisibility(View.VISIBLE);
+                case SHOW_UI:{
+                	TextView best = (TextView)ui_layout_view.findViewById(R.id.txtBestScore);
+                	TextView last = (TextView)ui_layout_view.findViewById(R.id.txtLastScore);
+                	
+                	if(GameMain.best_session_score != -1) best.setText("Best session score: " + GameMain.best_session_score);
+                	else best.setText("Best session score: N/A");
+                	
+                	if(GameMain.last_score != -1) last.setText("Last score: " + GameMain.last_score);
+                	else last.setText("Last score: N/A");
+                	
+                	ui_layout_view.setVisibility(View.VISIBLE);           	
                 	score_placard_view.setVisibility(View.GONE);
                 	break;
+                }
                 case HIDE_UI:
                 	ui_layout_view.setVisibility(View.GONE);
                 	break;
+                case SIGN_OUT:
+                	mHelper.signOut();
+        			sig_Btn.setVisibility(View.VISIBLE);
+        			sign_out.setVisibility(View.GONE);
             }
         }
     };
@@ -187,6 +202,12 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
         sign_out.setVisibility(View.GONE);
         sign_out.setOnClickListener(this);
         
+        Button achiev_btb = (Button)  ui_layout_view.findViewById(R.id.btnAchievements);
+        achiev_btb.setOnClickListener(this);
+        
+        Button lead_btn = (Button)  ui_layout_view.findViewById(R.id.btnLeaderboard);
+        lead_btn.setOnClickListener(this);
+        
         layout.addView(ui_layout_view);
         
         //score placard
@@ -197,7 +218,7 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
         btnOk.setOnClickListener(this);
         
         Button subBtn = (Button)score_placard_view.findViewById(R.id.btnSubmit);
-        subBtn.setVisibility(View.INVISIBLE);
+        subBtn.setVisibility(View.GONE);
         subBtn.setOnClickListener(this);
         layout.addView(score_placard_view);
         
@@ -264,14 +285,8 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		this.sign_out.setVisibility(View.VISIBLE);
 		this.unlockAchievement(3);
 		
-		
-		if(!startup){
-			this.incrementAchievement(4, 1);
-		this.incrementAchievement(5, 1);
-		this.incrementAchievement(6, 1);
-	
-		startup = true;
-		}
+		maingame.wait_screen.create_startup_achievements();
+		maingame.setScreen(maingame.wait_screen);
 	}
 
 	@Override
@@ -389,9 +404,7 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		}
 		else if(arg0.getId() == R.id.sign_out_btn)
 		{
-			mHelper.getGamesClient().signOut();
-			this.sig_Btn.setVisibility(View.VISIBLE);
-			this.sign_out.setVisibility(View.GONE);
+			handler.sendEmptyMessage(SIGN_OUT);
 		}
 		else if(arg0.getId() == R.id.btnOkScore)
 		{
@@ -403,6 +416,12 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		}
 		else if(arg0.getId() == R.id.btnSubmit){
 			this.submitScore(to_submit);
+		}
+		else if(arg0.getId() == R.id.btnAchievements){
+			this.showAchievements();
+		}
+		else if(arg0.getId() == R.id.btnLeaderboard){
+			this.showLeaderboard();
 		}
 	}
 	
@@ -479,8 +498,8 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 					if(is_online_and_signed) subBtn.setVisibility(View.VISIBLE);
 				}
 				else{
-					newLbl.setVisibility(View.INVISIBLE);
-					subBtn.setVisibility(View.INVISIBLE);
+					newLbl.setVisibility(View.GONE);
+					subBtn.setVisibility(View.GONE);
 				}
 				
 				if(score >= 50 && score <= 175) rat.setProgress(1);
@@ -492,6 +511,13 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 			}
 			
 		});
+	}
+	
+	@Override
+	public void onDestroy(){
+		super.onDestroy();
+		
+		maingame.pause();
 	}
 	
 }

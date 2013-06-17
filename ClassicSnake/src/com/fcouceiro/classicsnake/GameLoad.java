@@ -34,7 +34,7 @@ public class GameLoad extends UI implements LoadingScreen{
 	@Override
 	public void createGame() {
 		// TODO Auto-generated method stub
-		maingame.wait_screen = new WaitScreen();
+		maingame.wait_screen = new WaitScreen(maingame);
 	}
 
 	@Override

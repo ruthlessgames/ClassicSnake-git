@@ -41,7 +41,7 @@ public class GameDisplay extends UI{
 	
 		cabeca.setPosition((int)(GameMain.columns / 2)*GameMain.incW, (int)(GameMain.lines / 2)*GameMain.incH);
 		
-		snake = new Snake(cabeca,this.table,score_actual);
+		snake = new Snake(cabeca,this.table,score_actual,maingame);
 		snake.speed = snake_speed;
 		snake.addToTable();
 		
@@ -76,6 +76,7 @@ public class GameDisplay extends UI{
 		this.paused = false;
 		maingame.android_bridge.showAds(false);
 	}
+	
 	
 	@Override
 	public void render(float delta)
@@ -121,6 +122,6 @@ public class GameDisplay extends UI{
 	
 	
 	private void pop_UI() {
-
+	
 	}
 }

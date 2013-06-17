@@ -7,56 +7,6 @@
     android:orientation="horizontal"
     tools:context="com.badlogic.gdx.backends.android.AndroidApplication" >
 
-    <TextView
-        android:id="@+id/lblSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/spinnerSize"
-        android:layout_marginRight="24dp"
-        android:layout_toLeftOf="@+id/spinnerSize"
-        android:text="Size:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/lblSpedd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/lblSize"
-        android:layout_alignTop="@+id/spinnerSpeed"
-        android:text="Speed:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Spinner
-        android:id="@+id/spinnerSpeed"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/playBtn"
-        android:layout_alignParentEnd="false"
-        android:layout_alignRight="@+id/spinnerSize"
-        android:layout_marginBottom="55dp"
-        android:layout_toRightOf="@+id/lblSize"
-        android:entries="@array/speed_entries" />
-
-    <Spinner
-        android:id="@+id/spinnerSize"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/spinnerSpeed"
-        android:layout_alignLeft="@+id/playBtn"
-        android:layout_alignParentEnd="false"
-        android:layout_alignRight="@+id/playBtn"
-        android:layout_marginBottom="23dp"
-        android:entries="@array/size_entries" />
-
-    <Button
-        android:id="@+id/playBtn"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_out_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"
-        android:text="Play" />
-
     <TableRow
         android:id="@+id/sign_out_bar"
         android:layout_width="match_parent"
@@ -73,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_gravity="left|center_vertical"
-            android:text="Sign in and publish your latest scores to the public leaderboard! \nAlso you&apos;ll be presented with outstanding achievements along your journey, here, with Classic Snake X1!" />
+            android:text="Sign in and publish your latest scores to the public leaderboard! \nAlso you&apos;ll be presented with outstanding achievements along your journey,here, with Classic Snake X1!" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
@@ -91,5 +41,132 @@
             android:layout_gravity="right|center_vertical"
             android:text="Sign out" />
     </TableRow>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutDifficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" >
+
+        <Spinner
+            android:id="@+id/spinnerSpeed"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignTop="@+id/lblSpedd"
+            android:layout_marginLeft="28dp"
+            android:layout_toRightOf="@+id/lblSpedd"
+            android:entries="@array/speed_entries" />
+
+        <TextView
+            android:id="@+id/lblSpedd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/lblSize"
+            android:layout_below="@+id/lblSize"
+            android:layout_marginTop="59dp"
+            android:text="Speed:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/spinnerSize"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="84dp"
+            android:text="Difficulty"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Spinner
+            android:id="@+id/spinnerSize"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/spinnerSpeed"
+            android:layout_alignParentEnd="false"
+            android:layout_alignTop="@+id/lblSize"
+            android:entries="@array/size_entries" />
+
+        <TextView
+            android:id="@+id/lblSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textView1"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="28dp"
+            android:text="Size:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/playBtn"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/sign_out_bar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="29dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Play" />
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="104dp" >
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="86dp"
+            android:text="Progress"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txtBestScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/TextView02"
+            android:layout_marginTop="32dp"
+            android:text="Best session score:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/txtLastScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/txtBestScore"
+            android:layout_marginTop="21dp"
+            android:text="Last score:"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/btnAchievements"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtLastScore"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="29dp"
+            android:text="Achievements" />
+
+        <Button
+            android:id="@+id/btnLeaderboard"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnAchievements"
+            android:layout_centerHorizontal="true"
+            android:text="Leaderboard" />
+    </RelativeLayout>
 
 </RelativeLayout>

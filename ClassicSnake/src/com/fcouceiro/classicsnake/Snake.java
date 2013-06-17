@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class Snake {
 	Table display_table;
-
+	GameMain maingame;
 	Vertebra cabeca = null;
 	Vector2 cur_dir;
 	boolean can_change_dir = true;
@@ -27,11 +27,13 @@ public class Snake {
 	
 	Score score_actual;
 	
-	public Snake(Vertebra cabeca,Table display_table,Score actual)
+	
+	public Snake(Vertebra cabeca,Table display_table,Score actual,GameMain maingame)
 	{
 		this.display_table = display_table;
 		this.cabeca = cabeca;
 		this.cur_dir = GameMain.dir_right;
+		this.maingame = maingame;
 		
 		fruit = new Fruit(5);
 		
@@ -78,10 +80,12 @@ public class Snake {
 		this.to_add_new_vert = true;
 	}
 	
+	
+	
 	public void genNewFruit()
 	{
 		this.score_actual.incScore(fruit);
-		
+		maingame.incFruits();
 		
 		int y_r;
 		int x_r;
@@ -139,7 +143,7 @@ public class Snake {
 			
 			
 			//check collision with border
-			if(cabeca.getX() < 0|| cabeca.getX() >= GameMain.columns*GameMain.incW || cabeca.getY() < 0 || cabeca.getY() >= GameMain.lines*GameMain.incH)
+			if(cabeca.getX() < 0|| cabeca.getX() > GameMain.columns*GameMain.incW || cabeca.getY() < 0 || cabeca.getY() > GameMain.lines*GameMain.incH)
 			{
 				Gdx.app.log("colision", "border");
 				return -1;
