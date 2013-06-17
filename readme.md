@@ -13,3 +13,5 @@ You must include google-play-services_lib "as library" in Eclipse!
 *free mode
 
 *blitz version
+
+*offline achivements (when back online, unlock them all)
