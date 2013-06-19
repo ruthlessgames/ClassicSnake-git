@@ -108,15 +108,7 @@ public class GameDisplay extends UI{
 			}
 			GameMain.last_score = (int) this.score_actual.final_score;
 		
-		
-		stage.addAction(Actions.run(new Runnable(){
-
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						alpha = 0;
-					}}));
-		
+			alpha = 0;
 		maingame.android_bridge.showScorePlacard((int)score_actual.final_score,this.new_best_score);
 	}
 	

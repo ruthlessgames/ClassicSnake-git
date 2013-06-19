@@ -519,5 +519,11 @@ public class MainActivity extends AndroidApplication implements RequestHandlerBr
 		
 		maingame.pause();
 	}
+
+	@Override
+	public void onSignOutSucceeded() {
+		// TODO Auto-generated method stub
+		this.is_online_and_signed = false;
+	}
 	
 }

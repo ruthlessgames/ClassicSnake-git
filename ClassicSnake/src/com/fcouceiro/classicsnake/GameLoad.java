@@ -96,7 +96,9 @@ public class GameLoad extends UI implements LoadingScreen{
 		
 	
 			GameMain.asm.load("data/libgdx.png", Texture.class,param);
-		
+			GameMain.asm.load("data/body-down.png", Texture.class,param);
+			GameMain.asm.load("data/body-up.png", Texture.class,param);
+			GameMain.asm.load("data/body-default.png", Texture.class,param);
 	}
 
 }

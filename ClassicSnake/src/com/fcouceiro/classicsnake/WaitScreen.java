@@ -37,7 +37,7 @@ public class WaitScreen extends UI{
 			public void run() {
 				// TODO Auto-generated method stub
 				maingame.android_bridge.incrementAchievement(4, 1);
-				maingame.android_bridge.showToast("inc 1");
+		
 			
 			}}));
 		
@@ -50,7 +50,7 @@ public class WaitScreen extends UI{
 				// TODO Auto-generated method stub
 				
 				maingame.android_bridge.incrementAchievement(5, 1);
-				maingame.android_bridge.showToast("inc 2");
+				
 			}}));
 		
 		startup_action.addAction(Actions.delay(3));
@@ -62,7 +62,7 @@ public class WaitScreen extends UI{
 				// TODO Auto-generated method stub
 				
 				maingame.android_bridge.incrementAchievement(6, 1);
-				maingame.android_bridge.showToast("inc 3");
+		
 			}}));
 		
 		table.addAction(startup_action);

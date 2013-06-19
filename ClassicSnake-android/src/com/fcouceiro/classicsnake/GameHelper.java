@@ -59,6 +59,7 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
 
         /** Called when sign-in succeeds. */
         void onSignInSucceeded();
+        void onSignOutSucceeded();
     }
 
     /**
@@ -566,6 +567,8 @@ public class GameHelper implements GooglePlayServicesClient.ConnectionCallbacks,
             mConnectedClients &= ~CLIENT_APPSTATE;
             mAppStateClient.disconnect();
         }
+        
+        mListener.onSignOutSucceeded();
     }
 
     public void reconnectClients(int whatClients) {

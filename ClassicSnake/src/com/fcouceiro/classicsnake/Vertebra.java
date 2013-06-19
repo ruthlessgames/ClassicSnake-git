@@ -13,7 +13,7 @@ public class Vertebra extends Image{
 	
 	public Vertebra(Vector2 direction)
 	{
-		super(new TextureRegion(GameMain.asm.get("data/libgdx.png",Texture.class)));
+		super(Snake.default_img);
 		this.next_vertebra = null;
 		this.setSize(GameMain.incW, GameMain.incH);
 		this.direction = direction;
@@ -28,6 +28,7 @@ public class Vertebra extends Image{
 	{
 		last_direction = this.direction.cpy();
 		this.direction = newdir.cpy();
+			
 		this.update();
 	}
 

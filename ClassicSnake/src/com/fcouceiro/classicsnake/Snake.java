@@ -3,8 +3,11 @@ package com.fcouceiro.classicsnake;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Snake {
 	Table display_table;
@@ -27,6 +30,7 @@ public class Snake {
 	
 	Score score_actual;
 	
+	static TextureRegionDrawable default_img,up_img,down_img,head_img,rabo_img;
 	
 	public Snake(Vertebra cabeca,Table display_table,Score actual,GameMain maingame)
 	{
@@ -49,6 +53,10 @@ public class Snake {
 		
 		this.fruit.setPosition(GameMain.incW * x_r, GameMain.incH * y_r);
 		this.fruit.setVisible(true);
+		
+		default_img = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/body-default.png",Texture.class)));
+		up_img = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/body-up.png",Texture.class)));
+		down_img = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/body-down.png",Texture.class)));
 	}
 	
 	
