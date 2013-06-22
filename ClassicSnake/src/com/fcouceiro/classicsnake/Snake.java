@@ -30,7 +30,7 @@ public class Snake {
 	
 	Score score_actual;
 	
-	static TextureRegionDrawable default_img,up_img,down_img,head_img,rabo_img;
+	static TextureRegionDrawable iHorizontal,iVertical,iRightUp,iRightDown,iLeftUp,iLeftDown;
 	
 	public Snake(Vertebra cabeca,Table display_table,Score actual,GameMain maingame)
 	{
@@ -54,9 +54,12 @@ public class Snake {
 		this.fruit.setPosition(GameMain.incW * x_r, GameMain.incH * y_r);
 		this.fruit.setVisible(true);
 		
-		default_img = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/body-default.png",Texture.class)));
-		up_img = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/body-up.png",Texture.class)));
-		down_img = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/body-down.png",Texture.class)));
+		iHorizontal = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/snake-body/horizontal.png",Texture.class)));
+		iVertical = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/snake-body/vertical.png",Texture.class)));
+		iRightDown = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/snake-body/right-down.png",Texture.class)));
+		iRightUp  = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/snake-body/right-up.png",Texture.class)));
+		iLeftUp  = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/snake-body/left-up.png",Texture.class)));
+		iLeftDown  = new TextureRegionDrawable(new TextureRegion(GameMain.asm.get("data/snake-body/left-down.png",Texture.class)));
 	}
 	
 	

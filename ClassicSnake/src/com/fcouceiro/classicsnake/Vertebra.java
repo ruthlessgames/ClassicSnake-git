@@ -13,7 +13,7 @@ public class Vertebra extends Image{
 	
 	public Vertebra(Vector2 direction)
 	{
-		super(Snake.default_img);
+		super(Snake.iHorizontal);
 		this.next_vertebra = null;
 		this.setSize(GameMain.incW, GameMain.incH);
 		this.direction = direction;
@@ -29,6 +29,9 @@ public class Vertebra extends Image{
 		last_direction = this.direction.cpy();
 		this.direction = newdir.cpy();
 			
+		if(direction.y == GameMain.dir_up.y || direction.y == GameMain.dir_down.y) this.setDrawable(Snake.iVertical);
+		else this.setDrawable(Snake.iHorizontal);
+		
 		this.update();
 	}
 

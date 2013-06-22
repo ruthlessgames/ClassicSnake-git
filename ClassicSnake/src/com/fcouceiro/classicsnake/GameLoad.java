@@ -96,9 +96,12 @@ public class GameLoad extends UI implements LoadingScreen{
 		
 	
 			GameMain.asm.load("data/libgdx.png", Texture.class,param);
-			GameMain.asm.load("data/body-down.png", Texture.class,param);
-			GameMain.asm.load("data/body-up.png", Texture.class,param);
-			GameMain.asm.load("data/body-default.png", Texture.class,param);
+			GameMain.asm.load("data/snake-body/horizontal.png", Texture.class,param);
+			GameMain.asm.load("data/snake-body/vertical.png", Texture.class,param);
+			GameMain.asm.load("data/snake-body/right-up.png", Texture.class,param);
+			GameMain.asm.load("data/snake-body/right-down.png", Texture.class,param);
+			GameMain.asm.load("data/snake-body/left-up.png", Texture.class,param);
+			GameMain.asm.load("data/snake-body/left-down.png", Texture.class,param);
 	}
 
 }
