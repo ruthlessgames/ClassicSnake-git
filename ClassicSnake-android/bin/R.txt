@@ -55,7 +55,7 @@ int id RelativeLayout1 0x7f05000d
 int id ScoreView 0x7f050007
 int id TextView02 0x7f05001c
 int id btnAchievements 0x7f050018
-int id btnLeaderboard 0x7f050019
+int id btnLeaderboard 0x7f050017
 int id btnOkScore 0x7f05000a
 int id btnResumeGame 0x7f050005
 int id btnSubmit 0x7f05000c
@@ -66,7 +66,7 @@ int id lblSize 0x7f050014
 int id lblSpedd 0x7f050013
 int id none 0x7f050000
 int id normal 0x7f050001
-int id playBtn 0x7f050017
+int id playBtn 0x7f050019
 int id ratingBar 0x7f050008
 int id relativeLayoutDifficulty 0x7f050011
 int id satellite 0x7f050002

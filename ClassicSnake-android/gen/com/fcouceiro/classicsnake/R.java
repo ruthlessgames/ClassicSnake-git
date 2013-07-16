@@ -180,7 +180,7 @@ containing a value of this type.
         public static final int ScoreView=0x7f050007;
         public static final int TextView02=0x7f05001c;
         public static final int btnAchievements=0x7f050018;
-        public static final int btnLeaderboard=0x7f050019;
+        public static final int btnLeaderboard=0x7f050017;
         public static final int btnOkScore=0x7f05000a;
         public static final int btnResumeGame=0x7f050005;
         public static final int btnSubmit=0x7f05000c;
@@ -191,7 +191,7 @@ containing a value of this type.
         public static final int lblSpedd=0x7f050013;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int playBtn=0x7f050017;
+        public static final int playBtn=0x7f050019;
         public static final int ratingBar=0x7f050008;
         public static final int relativeLayoutDifficulty=0x7f050011;
         public static final int satellite=0x7f050002;

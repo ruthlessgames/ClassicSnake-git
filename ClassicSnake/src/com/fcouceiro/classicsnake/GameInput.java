@@ -56,7 +56,7 @@ public class GameInput implements GestureListener,InputProcessor{
 				snake.can_change_dir = false;
 			}
 			
-			
+			return true;
 		}
 		return false;
 	}

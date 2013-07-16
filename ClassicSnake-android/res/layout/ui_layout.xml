@@ -45,7 +45,9 @@
     <RelativeLayout
         android:id="@+id/relativeLayoutDifficulty"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true" >
 
         <Spinner
             android:id="@+id/spinnerSpeed"
@@ -96,8 +98,28 @@
             android:layout_marginTop="43dp"
             android:text="Difficulty"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnLeaderboard"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnAchievements"
+        android:layout_alignBottom="@+id/btnAchievements"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="57dp"
+        android:text="Leaderboard" />
+
+    <Button
+        android:id="@+id/btnAchievements"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="84dp"
+        android:layout_toLeftOf="@+id/btnLeaderboard"
+        android:text="Achievements" />
 
     <Button
         android:id="@+id/playBtn"
@@ -105,59 +127,39 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/sign_out_bar"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="Play" />
-
-    <Button
-        android:id="@+id/btnAchievements"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/playBtn"
-        android:layout_alignLeft="@+id/btnLeaderboard"
-        android:text="Achievements" />
-
-    <Button
-        android:id="@+id/btnLeaderboard"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnAchievements"
-        android:layout_marginLeft="159dp"
-        android:layout_toRightOf="@+id/playBtn"
-        android:text="Leaderboard" />
 
     <TextView
         android:id="@+id/txtLastScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btnLeaderboard"
-        android:layout_alignLeft="@+id/txtBestScore"
+        android:layout_above="@+id/btnAchievements"
+        android:layout_alignLeft="@+id/btnAchievements"
         android:layout_alignParentStart="false"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="43dp"
         android:text="Last score:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btnLeaderboard"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="46dp"
-        android:text="Progress"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/txtBestScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txtLastScore"
+        android:layout_alignLeft="@+id/txtLastScore"
         android:layout_alignParentStart="false"
-        android:layout_alignRight="@+id/TextView02"
-        android:layout_below="@+id/TextView02"
-        android:layout_marginTop="21dp"
         android:text="Best session score:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtBestScore"
+        android:layout_alignRight="@+id/txtBestScore"
+        android:layout_marginBottom="41dp"
+        android:text="Progress"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.fcouceiro.classicsnake;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +19,7 @@ public class Vertebra extends Image{
 		this.setSize(GameMain.incW, GameMain.incH);
 		this.direction = direction;
 		this.last_direction = direction;
+		this.updateImage();
 	}
 	
 	private void update(){
@@ -28,11 +30,58 @@ public class Vertebra extends Image{
 	{
 		last_direction = this.direction.cpy();
 		this.direction = newdir.cpy();
-			
-		if(direction.y == GameMain.dir_up.y || direction.y == GameMain.dir_down.y) this.setDrawable(Snake.iVertical);
-		else this.setDrawable(Snake.iHorizontal);
 		
+		this.updateImage();
 		this.update();
 	}
 
+	private void updateImage(){
+		
+		if(next_vertebra != null){
+			if(direction.equals(GameMain.dir_up.cpy()))
+			{
+				if(last_direction.equals(GameMain.dir_right))
+					next_vertebra.setDrawable(Snake.iLeftUp);
+				else if(last_direction.equals(GameMain.dir_left))
+					next_vertebra.setDrawable(Snake.iRightUp);
+				else if(last_direction.equals(GameMain.dir_up)){
+					next_vertebra.setDrawable(Snake.iVertical);
+				}
+			}
+			else if(direction.equals(GameMain.dir_down.cpy())){
+				if(last_direction.equals(GameMain.dir_right))
+					next_vertebra.setDrawable(Snake.iLeftDown);
+				else if(last_direction.equals(GameMain.dir_left))
+					next_vertebra.setDrawable(Snake.iRightDown);
+				else if(last_direction.equals(GameMain.dir_down)){
+					next_vertebra.setDrawable(Snake.iVertical);
+					
+				}
+			}
+			else if(direction.equals(GameMain.dir_right.cpy())){
+				if(last_direction.equals(GameMain.dir_down))
+					next_vertebra.setDrawable(Snake.iRightUp);
+				else if(last_direction.equals(GameMain.dir_up))
+					next_vertebra.setDrawable(Snake.iRightDown);
+				else if(last_direction.equals(GameMain.dir_right)){
+					next_vertebra.setDrawable(Snake.iHorizontal);
+					
+				}
+			}
+			else if(direction.equals(GameMain.dir_left.cpy())){
+				if(last_direction.equals(GameMain.dir_down))
+					next_vertebra.setDrawable(Snake.iLeftUp);
+				else if(last_direction.equals(GameMain.dir_up))
+					next_vertebra.setDrawable(Snake.iLeftDown);
+				else if(last_direction.equals(GameMain.dir_left)){
+					next_vertebra.setDrawable(Snake.iHorizontal);
+					
+				}
+			}
+			
+		}
+		else{
+			
+		}
+	}
 }

@@ -85,6 +85,7 @@ public class Snake {
 		}
 		
 		Vertebra vert_to_add = new Vertebra(last_vert.last_direction);
+
 		vert_to_add.setPosition(last_vert.getX(), last_vert.getY());
 		
 		this.to_add = vert_to_add;
@@ -103,13 +104,14 @@ public class Snake {
 		int gen_times=0;
 
 		while(true){
+			gen_times++;
 			y_r = this.rdm_int.nextInt((int)GameMain.lines);
 			x_r = this.rdm_int.nextInt((int)GameMain.columns);
 			boolean control = false;
 			Vertebra temp = cabeca;
 			while(temp !=null)
 			{
-				if(temp.getX() == x_r && temp.getY() == y_r){
+				if(temp.getX() + colisionbox_folga >= x_r && temp.getX() + temp.getWidth() - colisionbox_folga <= x_r + temp.getWidth() && temp.getY() + colisionbox_folga >= y_r && temp.getY() + temp.getHeight() - colisionbox_folga <= y_r + temp.getHeight()){
 					control = true;
 				}
 				
@@ -117,7 +119,7 @@ public class Snake {
 			}
 				
 			if(!control) break;
-			gen_times++;
+			
 		}
 		
 		this.fruit.setPosition(GameMain.incW * x_r, GameMain.incH * y_r);
@@ -136,6 +138,9 @@ public class Snake {
 			}
 			
 			cabeca.setDir(this.cur_dir);
+			//update cabeca image
+			if(cabeca.direction.equals(GameMain.dir_down.cpy()) || cabeca.direction.equals(GameMain.dir_up.cpy())) cabeca.setDrawable(Snake.iVertical);
+			else cabeca.setDrawable(Snake.iHorizontal);
 			
 			Vertebra aux = cabeca.next_vertebra;
 			Vertebra previous = cabeca;
